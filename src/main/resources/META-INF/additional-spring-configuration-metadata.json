@@ -1,0 +1,51 @@
+{
+  "groups": [
+    {
+      "name": "oauth",
+      "type": "com.ngonzano.springboot.oauth.config.OauthProperties",
+      "sourceType": "com.ngonzano.springboot.oauth.config.OauthProperties"
+    },
+    {
+      "name": "oauth.client",
+      "type": "com.ngonzano.springboot.oauth.config.OauthProperties$Client",
+      "sourceType": "com.ngonzano.springboot.oauth.config.OauthProperties"
+    },
+    {
+      "name": "oauth.flutter.client",
+      "type": "com.ngonzano.springboot.oauth.config.OauthProperties$FlutterClient",
+      "sourceType": "com.ngonzano.springboot.oauth.config.OauthProperties$Flutter"
+    },
+    {
+      "name": "oauth.jwk",
+      "type": "com.ngonzano.springboot.oauth.config.OauthProperties$Jwk",
+      "sourceType": "com.ngonzano.springboot.oauth.config.OauthProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "oauth.flutter.client.id",
+      "type": "java.lang.String",
+      "description": "Client ID OAuth registrado para la app Flutter."
+    },
+    {
+      "name": "oauth.flutter.client.registration-id",
+      "type": "java.lang.String",
+      "description": "ID interno estable del registro OAuth del cliente Flutter."
+    },
+    {
+      "name": "oauth.client.registration-id",
+      "type": "java.lang.String",
+      "description": "ID interno estable del registro OAuth del gateway."
+    },
+    {
+      "name": "oauth.jwk.private-key",
+      "type": "java.lang.String",
+      "description": "Clave privada RSA en PEM (PKCS#8). Obligatoria en producción."
+    },
+    {
+      "name": "oauth.jwk.public-key",
+      "type": "java.lang.String",
+      "description": "Clave pública RSA en PEM (SPKI). Obligatoria en producción."
+    }
+  ]
+}

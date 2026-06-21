@@ -2,7 +2,6 @@ package com.ngonzano.springboot.oauth.security;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.ngonzano.springboot.oauth.client.MsvcUsersClient;
 import com.ngonzano.springboot.oauth.client.dto.UserAuthResponse;
+import com.ngonzano.springboot.oauth.config.OauthProperties;
 
 import feign.FeignException;
 
@@ -23,9 +23,9 @@ public class DatabaseUserDetailsService implements UserDetailsService {
 
 	public DatabaseUserDetailsService(
 			MsvcUsersClient msvcUsersClient,
-			@Value("${oauth.internal-token}") String internalToken) {
+			OauthProperties oauthProperties) {
 		this.msvcUsersClient = msvcUsersClient;
-		this.internalToken = internalToken;
+		this.internalToken = oauthProperties.getInternalToken();
 	}
 
 	@Override

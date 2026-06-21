@@ -2,23 +2,25 @@ package com.ngonzano.springboot.oauth.service;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Service;
 
+import com.ngonzano.springboot.oauth.config.OauthProperties;
 import com.ngonzano.springboot.oauth.dto.LoginRequest;
 import com.ngonzano.springboot.oauth.dto.NativeTokenResponse;
 
 @Service
 public class NativeAuthService {
 
-	private static final long TOKEN_TTL_SECONDS = 300L;
+	private static final long TOKEN_TTL_SECONDS = 3600L;
 
 	private final AuthenticationManager authenticationManager;
 	private final JwtEncoder jwtEncoder;
@@ -28,12 +30,11 @@ public class NativeAuthService {
 	public NativeAuthService(
 			AuthenticationManager authenticationManager,
 			JwtEncoder jwtEncoder,
-			@Value("${oauth.issuer}") String issuer,
-			@Value("${oauth.flutter.client.id:flutter-app}") String audience) {
+			OauthProperties oauthProperties) {
 		this.authenticationManager = authenticationManager;
 		this.jwtEncoder = jwtEncoder;
-		this.issuer = issuer;
-		this.audience = audience;
+		this.issuer = oauthProperties.getIssuer();
+		this.audience = oauthProperties.getFlutter().getClient().getId();
 	}
 
 	public NativeTokenResponse login(LoginRequest request) {
@@ -45,6 +46,10 @@ public class NativeAuthService {
 		Instant issuedAt = Instant.now();
 		Instant expiresAt = issuedAt.plusSeconds(TOKEN_TTL_SECONDS);
 
+		List<String> roles = authentication.getAuthorities().stream()
+				.map(GrantedAuthority::getAuthority)
+				.collect(Collectors.toList());
+
 		JwtClaimsSet claims = JwtClaimsSet.builder()
 				.issuer(issuer)
 				.subject(authentication.getName())
@@ -52,6 +57,7 @@ public class NativeAuthService {
 				.issuedAt(issuedAt)
 				.expiresAt(expiresAt)
 				.claim("scope", "openid profile")
+				.claim("roles", roles)
 				.build();
 
 		String accessToken = jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
