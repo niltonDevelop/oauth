@@ -49,3 +49,10 @@ Es el **servidor de identidad** del cluster. Centraliza autenticación y emisió
 **Integrado con:** **msvc-gateway-server** (OAuth2 client + JWT resource server), **flutter_spring_boot** (login directo en `:9190`).
 
 **Orden de arranque recomendado:** 4.º, después de Eureka y msvc-users.
+
+## Perfiles y scripts
+
+- **dev** (default): desarrollo local con claves JWT efímeras — `application-dev.properties`.
+- **prod**: secretos y claves PEM obligatorias — `application-prod.properties`.
+
+Para simular **prod en local** (claves estables, variables de entorno): ver [scripts/README.md](scripts/README.md).
