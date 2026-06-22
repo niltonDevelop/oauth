@@ -7,6 +7,7 @@ Servidor de **autorización OAuth 2.1 / OpenID Connect** (Spring Authorization S
 - Java 21 · Spring Boot 4.1.0 · Spring Cloud 2025.1.2
 - Puerto: **9190**
 - Issuer: `http://127.0.0.1:9190`
+- **Distributed tracing:** [Micrometer Tracing](https://docs.micrometer.io/tracing/reference/) + Zipkin. Ver [docs/TRACING.md](docs/TRACING.md)
 
 ## Endpoints
 
@@ -50,9 +51,19 @@ Es el **servidor de identidad** del cluster. Centraliza autenticación y emisió
 
 **Orden de arranque recomendado:** 4.º, después de Eureka y msvc-users.
 
+## Tracing (Zipkin)
+
+```bash
+cd .. && docker compose up -d   # raíz SpringCloud → http://localhost:9411
+```
+
+Detalle: [docs/TRACING.md](docs/TRACING.md).
+
 ## Perfiles y scripts
 
 - **dev** (default): desarrollo local con claves JWT efímeras — `application-dev.properties`.
 - **prod**: secretos y claves PEM obligatorias — `application-prod.properties`.
 
 Para simular **prod en local** (claves estables, variables de entorno): ver [scripts/README.md](scripts/README.md).
+
+Para desplegar a **producción real** (checklist completo del ecosistema): ver [PRODUCTION-CHECKLIST.md](../PRODUCTION-CHECKLIST.md).

@@ -22,6 +22,8 @@ Utilidades para **simular producción en tu Mac** sin desplegar a un servidor re
 
 ### Producción real (servidor / K8s / cloud)
 
+Checklist completo de despliegue (todos los servicios + Flutter): **[PRODUCTION-CHECKLIST.md](../../PRODUCTION-CHECKLIST.md)**
+
 En un entorno real **no copies** `.jwk-local/` al servidor. Allí:
 
 - Las claves PEM van en un **secret manager** (Vault, AWS Secrets Manager, K8s Secrets).
