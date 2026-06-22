@@ -31,10 +31,10 @@ public class RsaKeyConfiguration {
 		if (jwk.hasConfiguredKeyPair()) {
 			return RsaKeyLoader.loadKeyPair(jwk);
 		}
-		if (environment.acceptsProfiles(Profiles.of("dev"))) {
+		if (environment.acceptsProfiles(Profiles.of("dev", "docker"))) {
 			return RsaKeyLoader.generateEphemeralKeyPair();
 		}
 		throw new IllegalStateException(
-				"Configura oauth.jwk.private-key y oauth.jwk.public-key o activa el perfil dev");
+				"Configura oauth.jwk.private-key y oauth.jwk.public-key o activa el perfil dev/docker");
 	}
 }
